@@ -23,6 +23,15 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "name", "author", "genre", "year_published", "created_at", "updated_at"], data.keys
   end
+
+  test "update" do
+    book = Book.first
+    patch "/books/#{book.id}.json", params: { name: "Updated name" }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "Updated name", data["name"]
+  end
 end
 
 #  test "show" do
