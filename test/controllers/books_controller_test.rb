@@ -11,16 +11,26 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "Book.count", 1 do
-      post "/books.json", params: { name: "Harry Potter the Sorcerer's Stone", author: "JK Rowling", genre: "fantasy", year_published: 1997 }
-      assert_response :created
-
-      data = JSON.parse(response.body)
-      assert_equal "New Book", data["title"]
-      assert_equal "Author Name", data["author"]
+      post "/books.json", params: { name: "Harry Potter", author: "JK Rowling", genre: "fantasy", year_published: 1996 }
+      assert_response 200
     end
   end
-  # test "the truth" do
-  #   assert true
-  # end
 
+  test "show" do
+    get "/books/#{Book.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "name", "author", "genre", "year_published", "created_at", "updated_at"], data.keys
+  end
 end
+
+#  test "show" do
+#     get "/books/#{Book.first.id}.json"
+#     assert_response 200
+#     data = JSON.parse(response.body)
+#     assert_equal ["id", "name", "width", "height", "created_at", "updated_at"], data.keys
+#     end
+#     end
+#   end
+# end

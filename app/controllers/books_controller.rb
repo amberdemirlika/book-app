@@ -5,12 +5,18 @@ class BooksController < ApplicationController
   end
 
   def create
-    @books = Book.new(
+    @book = Book.new(
       name: params[:name],
       author: params[:author],
       genre: params[:genre],
-      year_published: params[year_published],
+      year_published: params[:year_published],
     )
+    @book.save
+    render :show
+  end
+
+  def show
+    @book = Book.find_by(id: params[:id])
     render :show
   end
 end
