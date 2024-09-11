@@ -30,4 +30,10 @@ class BooksController < ApplicationController
     )
     render :show
   end
+
+  def destroy
+    @book = Book.find_by(id: params[:id])
+    @book.destroy
+    render json: { message: "Book destroyed successfully" }
+  end
 end
